@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name		YouTube - Mute Ads
-// @name:de		YouTube - Mute Ads
-// @versio		1.0.2
-// @descriptio		Automatically mutes VideoAds
-// @description:de	Schaltet Werbung auf YouTube automatisch stumm
-// @autor		VVind0wM4ker
-// @namespace		https://github.com/VVind0wM4ker/Userscripts
-// @license		MIT License
-// @gran		none
-// @includ		http*://*.youtube.com/watch*
+// @name                YouTube - Mute Ads
+// @name:de             YouTube - Mute Ads
+// @version             1.0.2
+// @description         Automatically mutes VideoAds
+// @description:de      Schaltet Werbung auf YouTube automatisch stumm
+// @autor               VVind0wM4ker
+// @namespace           https://github.com/VVind0wM4ker/Userscripts
+// @license             MIT License
+// @grant               none
+// @include             http*://*.youtube.com/watch*
 // ==/UserScript==
 
 

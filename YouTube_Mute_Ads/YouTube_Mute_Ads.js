@@ -1,19 +1,19 @@
 // ==UserScript==
-// @name             YouTube - Mute Ads
-// @name:de          YouTube - Mute Ads
-// @version          1.0.2
-// @description      Automatically mutes VideoAds
-// @description:de   Schaltet Werbung auf YouTube automatisch stumm
-// @autor            VVind0wM4ker
-// @namespace        firewaterairanddirt
-// @license	     http://creativecommons.org/licenses/by-nc/4.0/
-// @grant            none
-// @include          http*://*.youtube.com/watch*
+// @name		YouTube - Mute Ads
+// @name:de		YouTube - Mute Ads
+// @versio		1.0.2
+// @descriptio		Automatically mutes VideoAds
+// @description:de	Schaltet Werbung auf YouTube automatisch stumm
+// @autor		VVind0wM4ker
+// @namespace		https://github.com/VVind0wM4ker/Userscripts
+// @license		MIT License
+// @gran		none
+// @includ		http*://*.youtube.com/watch*
 // ==/UserScript==
 
 
 var adPlaying = 0;
-var interval = 500;    //checking for Ads all 0.5 seconds, keep in mind lower interval rates = lower performance
+var interval = 500	//checking for Ads all 0.5 seconds, keep in mind lower interval rates = lower performance
 var vid = document.getElementsByClassName("video-stream html5-main-video")[0];
 
 var timer, adTimeout;
@@ -26,7 +26,7 @@ vid.onpause = function() {pauseTimer();};
 	
 var muteAds = function () {
     
-    //console.log("check for Ads");                                                            //write to console, everytime the script gets executed - debug function
+    //console.log("check for Ads")					//write to console, everytime the script gets executed - debug function
     
     if (document.getElementsByClassName("ad-showing").length > 0) {
         

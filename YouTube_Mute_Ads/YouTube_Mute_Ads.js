@@ -9,7 +9,7 @@
 // @homepageURL         https://github.com/VVind0wM4ker/Userscripts/tree/master/YouTube_Mute_Ads
 // @license             MIT License
 // @grant               none
-// @include             *://*.youtube.com/watch*
+// @include             http*://*.youtube.com/watch*
 // ==/UserScript==
 
 

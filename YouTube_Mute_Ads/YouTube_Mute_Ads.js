@@ -13,7 +13,7 @@
 
 
 var adPlaying = 0;
-var interval = 500	//checking for Ads all 0.5 seconds, keep in mind lower interval rates = lower performance
+var interval = 500
 var vid = document.getElementsByClassName("video-stream html5-main-video")[0];
 
 var timer, adTimeout;
@@ -26,7 +26,7 @@ vid.onpause = function() {pauseTimer();};
 	
 var muteAds = function () {
     
-    //console.log("check for Ads")					//write to console, everytime the script gets executed - debug function
+    //console.log("check for Ads")					//for testing
     
     if (document.getElementsByClassName("ad-showing").length > 0) {
         

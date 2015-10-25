@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                YouTube - Mute Ads
 // @name:de             YouTube - Mute Ads
-// @version             1.0.3
+// @version             1.0.4
 // @description         Automatically mutes VideoAds
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @autor               VVind0wM4ker
@@ -16,7 +16,7 @@ var adPlaying = 0;
 var interval = 500
 var vid = document.getElementsByClassName("video-stream html5-main-video")[0];
 
-var timer, adTimeout;
+var timer;
 
 
 vid.onplay = function() {startTimer();};
@@ -48,12 +48,10 @@ var muteAds = function () {
 function pauseTimer () {
     
     clearInterval(timer);
-    clearTimeout(adTimeout);
 }
 
 function startTimer () {
     
     clearInterval(timer);
-    clearTimeout(adTimeout);
     timer = setInterval(muteAds, interval);
 }

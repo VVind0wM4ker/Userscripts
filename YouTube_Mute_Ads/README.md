@@ -17,3 +17,4 @@ To keep it small, it only mutes ads on <i>www.youtube.com/watch?*</i> which is 9
 ###Available on:
 
 - [GreasyFork](https://greasyfork.org/de/scripts/13340-youtube-mute-ads/ "YouTube - Mute Ads")
+- [OpenUserJS](https://openuserjs.org/scripts/VVind0wM4ker/YouTube_-_Mute_Ads "YouTube - Mute Ads")

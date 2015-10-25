@@ -28,7 +28,7 @@ var muteAds = function () {
     
     //console.log("check for Ads")					//for testing
     
-    if (document.getElementsByClassName("ad-showing").length > 0) {
+    if (document.getElementsByClassName("ad-interrupting").length > 0) {
         
         adPlaying = 1;
         vid.mute();

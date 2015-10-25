@@ -14,6 +14,6 @@ The script mutes advertisements before and while the video, it unmutes the video
 To keep it small, it only mutes ads on <i>www.youtube.com/watch?*</i> which is 99% of all videos you'll be watching.
 
 -
-#Available on
+###Available on:
 
 - [GreasyFork](https://greasyfork.org/de/scripts/13340-youtube-mute-ads/ "YouTube - Mute Ads")

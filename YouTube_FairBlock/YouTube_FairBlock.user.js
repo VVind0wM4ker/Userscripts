@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                YouTube FairBlock
 // @name:de             YouTube FairBlock
-// @version             1.0
+// @version             1.0.1
 // @description         Mutes and skips ads automatically
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @autor               VVind0wM4ker

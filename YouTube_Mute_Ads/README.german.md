@@ -1,4 +1,6 @@
 #YouTube - Mute Ads
+##### Möchtest du ein verbessertes Script, dass Werbung automatisch schließt/überspringt?
+##### Dann schau dir doch [FairBlock](https://github.com/VVind0wM4ker/Userscripts/tree/master/YouTube_FairBlock "YouTube FairBlock") auf GitHub an.
 
 Dieses Skript schaltet YouTube-Werbung automatisch stumm.
 

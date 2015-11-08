@@ -13,7 +13,6 @@ Watch YouTube videos without getting exasperated, but still support your favorit
 - close popup ads as soon as they appear
 
 ...and keep you from getting insane, when the same annoying ad plays over and over again
-
 -
 ###Available on:
 

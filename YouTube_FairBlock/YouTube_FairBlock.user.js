@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name                YouTube Fair Ad Block
-// @name:de             YouTube Fair Ad Block
+// @name                YouTube FairBlock
+// @name:de             YouTube FairBlock
 // @version             1.0
 // @description         Hides and mutes ads automatically
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm

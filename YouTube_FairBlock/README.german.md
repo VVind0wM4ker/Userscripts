@@ -9,7 +9,7 @@ Unterschtütze deine Lieblings-Youtuber, ohne allzusehr von der Werbung beeintr�
 ###Funktionen
 
 - Videowerbung automatisch stumm schalten
-- automatisch den 'Überspringen' Button drücken
+- automatisch den 'Überspringen'-Button drücken
 - Werbe-PopUps schließen, sobald sie angezeigt werden
 
 -

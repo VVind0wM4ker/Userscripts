@@ -26,7 +26,7 @@ function initScript() {
     function setup(resume) {
         if (hasClass(player_, "ad-created") === true) {
 
-            if (resume != 1) /* a little trick to only print once */
+            if (resume !== 1) /* a little trick to only print once */
                 { console.log("Video has Ads"); }
 
             detectAds.observe(player_, config1);
@@ -39,7 +39,7 @@ function initScript() {
     }
 
     let detectAds = new MutationObserver(function() {
-        console.log("check for Ads");
+        console.log("Checking for Showing Ads");
 
         //logTries();        //Test function
 
@@ -60,7 +60,7 @@ function initScript() {
         let skipContainer = document.getElementsByClassName("videoAdUiSkipContainer")[0];
         let skipAdButton = document.getElementsByClassName("videoAdUiSkipButton");
 
-        if (skipAdButton.length > 0 && skipContainer.style.display != "none") {
+        if (skipAdButton.length > 0 && skipContainer.style.display !== "none") {
 
             skipAdButton[0].click();
             adPlaying = 0;

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                YouTube FairBlock
 // @name:de             YouTube FairBlock
-// @version             1.0.1
+// @version             1.1.0
 // @description         Mutes and skips ads automatically
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @autor               VVind0wM4ker
@@ -12,57 +12,53 @@
 // @include             http*://*.youtube.com/watch*
 // ==/UserScript==
 
+function initScript() {
+    "use strict";
 
-var adPlaying = 0;
-var i = 0;
+    console.log("YouTube FairBlock started");
 
-var video = document.getElementsByClassName("video-stream html5-main-video")[0];
-var player = document.getElementsByClassName("html5-video-player")[0];
+    let adPlaying = 0;
+    let i = 0;
 
+    let video_ = document.getElementsByClassName("video-stream html5-main-video")[0];
+    let player_ = document.getElementsByClassName("html5-video-player")[0];
 
-function setup (resume) {
+    function setup(resume) {
+        if (hasClass(player_, "ad-created") === true) {
 
-    var hasAds = hasClass(player, "ad-created");
+            if (resume != 1) /* a little trick to only print once */
+                { console.log("Video has Ads"); }
 
-    if (hasAds === true ) {
-        
-        if (resume != 1) {console.log("Video has Ads");}
-        
-        detectAds.observe(player, config1);
-        
-        video.onplay = function () {detectAds.disconnect();setTimeout(function(){setup(1);}, 1000);}; //Delay for Content to load
-        video.onpause = function() {detectAds.disconnect();};
+            detectAds.observe(player_, config1);
+            video_.onplay = function() { detectAds.disconnect(); setTimeout(function() { setup(1); }, 1000); }; // Wait for Content to load
+            video_.onpause = function() { detectAds.disconnect(); };
+        } else {
+            console.log("Video has no Ads :)");
+            return;
+        }
     }
-    else {console.log("Video has no Ads :)");return;}
-}
 
-
-var detectAds = new MutationObserver(
-    
-    function() {
-
+    let detectAds = new MutationObserver(function() {
         console.log("check for Ads");
 
         //logTries();        //Test function
-        
-        if (hasClass(player, "ad-showing") === true) {                
-        
-             if (hasClass(player, "ad-interrupting") === true) {videoAd();}
-             else{setTimeout(function(){ popupAd(); }, 50);}
+
+        if (hasClass(player_, "ad-showing") === true) {
+            if (hasClass(player_, "ad-interrupting") === true) {
+                videoAd();
+            } else {
+                setTimeout(function() { popupAd(); }, 50);
+            }
+        } else {
+            player_.unMute();
         }
-        else{video.unMute();}
-    }
-);
+    });
 
-
-var skipVideo = new MutationObserver(
-    
-    function() {
-        
+    let skipVideo = new MutationObserver(function() {
         adPlaying = 1;
-        
-        var skipContainer = document.getElementsByClassName("videoAdUiSkipContainer")[0];
-        var skipAdButton = document.getElementsByClassName("videoAdUiSkipButton");
+
+        let skipContainer = document.getElementsByClassName("videoAdUiSkipContainer")[0];
+        let skipAdButton = document.getElementsByClassName("videoAdUiSkipButton");
 
         if (skipAdButton.length > 0 && skipContainer.style.display != "none") {
 
@@ -70,58 +66,50 @@ var skipVideo = new MutationObserver(
             adPlaying = 0;
             skipVideo.disconnect();
             detectAds.disconnect();
-            
-            setTimeout(function(){setup(1);}, 1000);
+
+            setTimeout(function() { setup(1); }, 1000);
+        }
+    });
+
+    function videoAd() {
+        player_.mute();
+        let skipContainer = document.getElementsByClassName("videoAdUiSkipContainer")[0];
+        let skipAdButtonLen = document.getElementsByClassName("videoAdUiSkipButton").length;
+        if (adPlaying === 0 && skipAdButtonLen > 0) {
+            skipVideo.observe(skipContainer, config2);
         }
     }
-);
 
+    function popupAd() {
+        let closePopup = document.getElementsByClassName("close-button");
+        if (closePopup.length > 0) {
+            closePopup[0].click();
+        }
+    }
 
-function videoAd () {
+    function hasClass(element, cls) {
+        return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+    }
 
-    video.mute();
+    function logTries() {
+        document.getElementById("eow-title").innerHTML = i;
+        i++;
+    }
 
-    var skipContainer = document.getElementsByClassName("videoAdUiSkipContainer")[0];
-    var skipAdButton = document.getElementsByClassName("videoAdUiSkipButton").length;
-    if (adPlaying === 0 && skipAdButton > 0) {skipVideo.observe(skipContainer, config2);}
+    let config1 = {
+        attributes: true,
+        childList: false,
+        subtree: false,
+        attributeFilter: ['class']
+    };
+
+    let config2 = {
+        attributes: true,
+        childList: false,
+        subtree: false,
+    };
+
+    document.addEventListener("DOMContentLoaded", setup(), false);
 }
 
-
-function popupAd () {
-    
-    var closePopup = document.getElementsByClassName("close-button");
-    if (closePopup.length > 0) {closePopup[0].click();}
-}
-
-
-function hasClass (element, cls) {
-
-    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
-}
-
-
-function logTries () {
-    
-    document.getElementById("eow-title").innerHTML = i;
-    i++;
-}
-
-
-var config1 = {
-    
-    attributes: true,
-    childList: false,
-    subtree: false,
-    attributeFilter: ['class']
-};
-
-
-var config2 = {
-    
-    attributes: true,
-    childList: false,
-    subtree: false,
-};
-
-
-document.addEventListener("DOMContentLoaded", setup(), false);
+initScript();

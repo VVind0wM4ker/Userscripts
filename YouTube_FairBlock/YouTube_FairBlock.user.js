@@ -50,7 +50,7 @@ function initScript() {
                 setTimeout(function() { popupAd(); }, 50);
             }
         } else {
-            player_.unMute();
+            player_.unMute(); // If no add is been shown ensure the video has volume
         }
     });
 
@@ -62,10 +62,11 @@ function initScript() {
 
         if (skipAdButton.length > 0 && skipContainer.style.display !== "none") {
 
-            skipAdButton[0].click();
             adPlaying = 0;
             skipVideo.disconnect();
             detectAds.disconnect();
+            player_.unMute(); // unmutting before skiping ad
+            skipAdButton[0].click();
 
             setTimeout(function() { setup(1); }, 1000);
         }

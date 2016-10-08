@@ -5,6 +5,7 @@
 // @description         Mutes and skips ads automatically
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @autor               VVind0wM4ker
+// @contributor         helq
 // @namespace           https://github.com/VVind0wM4ker/Userscripts
 // @homepageURL         https://github.com/VVind0wM4ker/Userscripts/tree/master/YouTube_FairBlock
 // @license             MIT License

@@ -19,4 +19,3 @@ Um das Skript klein und simpel zu halten, wird es nur auf <i>www.youtube.com/wat
 
 - [GreasyFork](https://greasyfork.org/de/scripts/13340-youtube-mute-ads/ "YouTube - Mute Ads")
 - [OpenUserJS](https://openuserjs.org/scripts/VVind0wM4ker/YouTube_-_Mute_Ads "YouTube - Mute Ads")
-- [WebExtender](http://www.webextender.net/scripts/show/487464.html "YouTube - Mute Ads")

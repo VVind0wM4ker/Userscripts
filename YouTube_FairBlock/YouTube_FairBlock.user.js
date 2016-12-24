@@ -51,7 +51,7 @@ function initScript() {
                 setTimeout(function() { popupAd(); }, 50);
             }
         } else {
-            player_.unMute(); // If no add is been shown ensure the video has volume
+            player_.muted = false; // If no add is been shown ensure the video has volume
         }
     });
 
@@ -66,7 +66,7 @@ function initScript() {
             adPlaying = 0;
             skipVideo.disconnect();
             detectAds.disconnect();
-            player_.unMute(); // unmutting before skiping ad
+            player_.muted = false; // unmutting before skiping ad
             skipAdButton[0].click();
 
             setTimeout(function() { setup(1); }, 1000);
@@ -74,7 +74,7 @@ function initScript() {
     });
 
     function videoAd() {
-        player_.mute();
+        player_.muted = true;
         let skipContainer = document.getElementsByClassName("videoAdUiSkipContainer")[0];
         let skipAdButtonLen = document.getElementsByClassName("videoAdUiSkipButton").length;
         if (adPlaying === 0 && skipAdButtonLen > 0) {

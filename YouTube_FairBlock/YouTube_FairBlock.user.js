@@ -36,39 +36,41 @@ function setPlayerMutedBefore(state) {
   }
 }
 
-function getFirstElem(elements) {
-  if (elements.length > 0) {
-    return elements[0];
-  }
-  return null;
-}
 function getVideo() {
-  return getFirstElem(document.getElementsByClassName(VIDEO_CLASS));
+  return document.getElementsByClassName(VIDEO_CLASS)[0];
 }
 function getPlayer() {
   return document.getElementsByClassName(PLAYER_CLASS)[0];
 }
 function getVideoAdSkipBtn() {
-  return getFirstElem(
-    getPlayer().querySelectorAll("div." + PLAYER_VIDEOADSKIPBTN_CLASS)
-  );
+  if (getPlayer() !== undefined) {
+    return getPlayer().querySelectorAll("div." + PLAYER_VIDEOADSKIPBTN_CLASS)[0];
+  }
+  return undefined;
 }
 function getVideoAdContainer() {
-  return getFirstElem(
-    getPlayer().getElementsByClassName(PLAYER_POPUPCONTAINER_CLASS)
-  );
+  if (getPlayer() !== undefined) {
+    return getPlayer().getElementsByClassName(PLAYER_POPUPCONTAINER_CLASS)[0];
+  }
+  return undefined;
 }
 function getVideoAdCloseBtn() {
-  return getFirstElem(
-    getVideoAdContainer().getElementsByClassName(PLAYER_POPUPCLOSEBTN_CLASS)
-  );
+  if(getVideoAdContainer() !== undefined) {
+    return getVideoAdContainer().getElementsByClassName(PLAYER_POPUPCLOSEBTN_CLASS)[0];
+  }
 }
 function getMuteBtn() {
-  return getPlayer().querySelectorAll("button." + PLAYER_MUTEBTN_CLASS)[0];
+  if (getPlayer() !== undefined) {
+    return getPlayer().querySelectorAll("button." + PLAYER_MUTEBTN_CLASS)[0];
+  }
+  return undefined;
 }
 
 function isAdPlaying() {
-  return getPlayer().className.indexOf(PLAYER_VIDEOADPLAYING_CLASS) != -1
+  if (getPlayer() !== undefined) {
+    return getPlayer().className.indexOf(PLAYER_VIDEOADPLAYING_CLASS) != -1;
+  }
+  return undefined;
 }
 // -------------------------------
 
@@ -133,7 +135,7 @@ function analVideo() {
       adStarted = true;
       setPlayerMutedBefore(getPlayer().isMuted());
       getPlayer().mute();
-      if (getVideoAdSkipBtn() !== null) {
+      if (getVideoAdSkipBtn() !== undefined) {
         log("video playing: Ad(skipable)");
         PLAYER_ADSKIPPER.observe(getVideoAdSkipBtn(), PLAYER_ADSKIPPER_CONF);
         return;
@@ -159,8 +161,9 @@ function analVideo() {
 function closeVideoPopupAd() {
   logFunc("closeVideoPopupAd");
   if (getComputedStyle(getVideoAdContainer())['display'] != "none" &&
-      getVideoAdCloseBtn() !== null)
+      getVideoAdCloseBtn() !== undefined)
   {
+    log("closing ad...")
     getVideoAdCloseBtn().click();
   }
 }

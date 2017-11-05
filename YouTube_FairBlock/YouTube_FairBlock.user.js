@@ -13,3 +13,39 @@
 // @updateURL           https://github.com/VVind0wM4ker/Userscripts/raw/develop/YouTube_FairBlock/YouTube_FairBlock.user.js
 // @downloadURL         https://github.com/VVind0wM4ker/Userscripts/raw/develop/YouTube_FairBlock/YouTube_FairBlock.user.js
 // ==/UserScript==
+
+const DEBUG = true;
+
+// ----- Debug functions -----
+function log(msg) {
+  if (DEBUG === true)
+    console.log("[DEBUG] " + msg);
+}
+
+function logFunc(funcName, param = "") {
+  log(funcName + "(" + param + ")");
+}
+// ---------------------------
+
+function hook(param = "") {
+  logFunc("hook", param);
+  // add eventlistener if userscript started before the site finished loading
+  if (document.readyState == "loading") {
+    log("site not loaded\n" +
+        "adding EventListener...");
+    document.addEventListener("DOMContentLoaded", function() {hook("DOM");});
+    return;
+  }
+  log("site loaded")
+  // detect navigation on the site
+  document.body.addEventListener("yt-navigate-finish", function() {
+    setup("yt-nav")
+  });
+  setup("DOM");
+}
+
+function setup(param = "") {
+  logFunc("setup", param);
+};
+
+hook("userscript loaded");

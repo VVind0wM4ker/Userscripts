@@ -15,13 +15,6 @@
 // ==/UserScript==
 
 const DEBUG = true;
-const VIDEO_CLASS = "video-stream html5-main-video";
-const PLAYER_CLASS = "html5-video-player";
-const PLAYER_VIDEOADPLAYING_CLASS = "ad-interrupting";
-const PLAYER_VIDEOADSKIPBTN_CLASS = "videoAdUiSkipContainer";
-const PLAYER_POPUPCONTAINER_CLASS = "ad-container";
-const PLAYER_POPUPCLOSEBTN_CLASS = "close-button";
-const PLAYER_MUTEBTN_CLASS = "ytp-mute-button";
 
 var adStarted = false;
 var playerMutedBefore;
@@ -37,38 +30,38 @@ function setPlayerMutedBefore(state) {
 }
 
 function getVideo() {
-  return document.getElementsByClassName(VIDEO_CLASS)[0];
+  return document.getElementsByClassName("video-stream html5-main-video")[0];
 }
 function getPlayer() {
-  return document.getElementsByClassName(PLAYER_CLASS)[0];
+  return document.getElementsByClassName("html5-video-player")[0];
 }
 function getVideoAdSkipBtn() {
   if (getPlayer() !== undefined) {
-    return getPlayer().querySelectorAll("div." + PLAYER_VIDEOADSKIPBTN_CLASS)[0];
+    return getPlayer().querySelectorAll("div.videoAdUiSkipContainer")[0];
   }
   return undefined;
 }
 function getVideoAdContainer() {
   if (getPlayer() !== undefined) {
-    return getPlayer().getElementsByClassName(PLAYER_POPUPCONTAINER_CLASS)[0];
+    return getPlayer().getElementsByClassName("ad-container")[0];
   }
   return undefined;
 }
 function getVideoAdCloseBtn() {
   if(getVideoAdContainer() !== undefined) {
-    return getVideoAdContainer().getElementsByClassName(PLAYER_POPUPCLOSEBTN_CLASS)[0];
+    return getVideoAdContainer().getElementsByClassName("close-button")[0];
   }
 }
 function getMuteBtn() {
   if (getPlayer() !== undefined) {
-    return getPlayer().querySelectorAll("button." + PLAYER_MUTEBTN_CLASS)[0];
+    return getPlayer().querySelectorAll("button.ytp-mute-button")[0];
   }
   return undefined;
 }
 
 function isAdPlaying() {
   if (getPlayer() !== undefined) {
-    return getPlayer().className.indexOf(PLAYER_VIDEOADPLAYING_CLASS) != -1;
+    return getPlayer().className.indexOf("ad-interrupting") != -1;
   }
   return undefined;
 }

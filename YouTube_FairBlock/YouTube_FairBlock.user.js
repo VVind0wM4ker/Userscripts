@@ -18,7 +18,9 @@ const DEBUG = true;
 const VIDEO_CLASS = "video-stream html5-main-video";
 const PLAYER_CLASS = "html5-video-player";
 const PLAYER_VIDEOADPLAYING_CLASS = "ad-interrupting";
-const PLAYER_SKIPBTN_CLASS = "videoAdUiSkipContainer";
+const PLAYER_VIDEOADSKIPBTN_CLASS = "videoAdUiSkipContainer";
+const PLAYER_POPUPCONTAINER_CLASS = "ad-container";
+const PLAYER_POPUPCLOSEBTN_CLASS = "close-button";
 const PLAYER_MUTEBTN_CLASS = "ytp-mute-button";
 
 var adStarted = false;
@@ -34,19 +36,32 @@ function setPlayerMutedBefore(state) {
   }
 }
 
+function getFirstElem(elements) {
+  if (elements.length > 0) {
+    return elements[0];
+  }
+  return null;
+}
 function getVideo() {
-  return document.getElementsByClassName(VIDEO_CLASS)[0];
+  return getFirstElem(document.getElementsByClassName(VIDEO_CLASS));
 }
 function getPlayer() {
   return document.getElementsByClassName(PLAYER_CLASS)[0];
 }
-function getSkipBtn() {
-  let results = getPlayer().querySelectorAll("div." + PLAYER_SKIPBTN_CLASS);
-  if (results.length > 0) {
-    return results[0];
-  } else {
-    return null;
-  }
+function getVideoAdSkipBtn() {
+  return getFirstElem(
+    getPlayer().querySelectorAll("div." + PLAYER_VIDEOADSKIPBTN_CLASS)
+  );
+}
+function getVideoAdContainer() {
+  return getFirstElem(
+    getPlayer().getElementsByClassName(PLAYER_POPUPCONTAINER_CLASS)
+  );
+}
+function getVideoAdCloseBtn() {
+  return getFirstElem(
+    getVideoAdContainer().getElementsByClassName(PLAYER_POPUPCLOSEBTN_CLASS)
+  );
 }
 function getMuteBtn() {
   return getPlayer().querySelectorAll("button." + PLAYER_MUTEBTN_CLASS)[0];
@@ -68,14 +83,14 @@ function logFunc(funcName, param = "") {
 }
 // ---------------------------
 
-const ADSKIPPER = new MutationObserver(function(mutation) {
-  if (getComputedStyle(getSkipBtn())['display'] != "none") {
+const PLAYER_ADSKIPPER = new MutationObserver(function(mutation) {
+  if (getComputedStyle(getVideoAdSkipBtn())['display'] != "none") {
     log("skipping ad...")
-    getSkipBtn().firstChild.click();
-    ADSKIPPER.disconnect();
+    getVideoAdSkipBtn().firstChild.click();
+    PLAYER_ADSKIPPER.disconnect();
   }
 });
-const ADSKIPPER_CONF = {
+const PLAYER_ADSKIPPER_CONF = {
     attributes: true,
     childList: false,
     characterData: false,
@@ -104,6 +119,9 @@ function setup(param = "") {
   // prevent mess if setup() is called more than once
   if (getVideo().onplay === null) {
     freshSetup = true;
+    getVideoAdContainer().addEventListener("DOMNodeInserted", function() {
+      closeVideoPopupAd();
+    });
     getVideo().onplay = function() {analVideo()};
   }
 };
@@ -115,9 +133,9 @@ function analVideo() {
       adStarted = true;
       setPlayerMutedBefore(getPlayer().isMuted());
       getPlayer().mute();
-      if (getSkipBtn() !== null) {
+      if (getVideoAdSkipBtn() !== null) {
         log("video playing: Ad(skipable)");
-        ADSKIPPER.observe(getSkipBtn(), ADSKIPPER_CONF);
+        PLAYER_ADSKIPPER.observe(getVideoAdSkipBtn(), PLAYER_ADSKIPPER_CONF);
         return;
       }
       log("video playing: Ad(unskipable)");
@@ -135,6 +153,15 @@ function analVideo() {
       log("Video returned, unmuting player...");
       getPlayer().unMute();      
     }
+  }
+}
+
+function closeVideoPopupAd() {
+  logFunc("closeVideoPopupAd");
+  if (getComputedStyle(getVideoAdContainer())['display'] != "none" &&
+      getVideoAdCloseBtn() !== null)
+  {
+    getVideoAdCloseBtn().click();
   }
 }
 

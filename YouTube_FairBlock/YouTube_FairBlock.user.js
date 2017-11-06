@@ -79,7 +79,7 @@ function logFunc(funcName, param = "") {
 // ---------------------------
 
 const PLAYER_ADSKIPPER = new MutationObserver(function(mutation) {
-  if (getComputedStyle(getVideoAdSkipBtn())['display'] != "none") {
+  if (getComputedStyle(getVideoAdSkipBtn()).display != "none") {
     log("skipping ad...")
     getVideoAdSkipBtn().firstChild.click();
     PLAYER_ADSKIPPER.disconnect();

@@ -9,7 +9,9 @@
 // @license             MIT License
 // @grant               none
 // @noframes
-// @include             ^https?:\/\/www\.youtube\.com\/?(watch\?[^\/]+|user\/[^\/]+(\/featured)?)?$
+// @include             ^https?:\/\/www\.youtube\.com\/?$
+// @include             ^https?:\/\/www\.youtube\.com\/watch\?[^\/]+$
+// @include             ^https?:\/\/www\.youtube\.com\/user\/[^\/]+(\/featured)?$
 // @updateURL           https://github.com/VVind0wM4ker/Userscripts/raw/develop/YouTube_FairBlock/YouTube_FairBlock.user.js
 // @downloadURL         https://github.com/VVind0wM4ker/Userscripts/raw/develop/YouTube_FairBlock/YouTube_FairBlock.user.js
 // ==/UserScript==
@@ -23,7 +25,7 @@ var playerMutedBefore;
 // Getter functions instead of vars to prevent getting old elements
 // in case of navigation for example
 function setPlayerMutedBefore(state) {
-  if (state === true || state === false) {
+  if (state === true || state === false) { 
     log("Set playerMutedBefore: [" + state + "]");
     playerMutedBefore = state;
   }

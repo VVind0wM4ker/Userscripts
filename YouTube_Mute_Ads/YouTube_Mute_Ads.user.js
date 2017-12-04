@@ -4,10 +4,9 @@
 // @version             2.0.0
 // @description         Automatically mutes VideoAds
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
-// @autor               VVind0wM4ker
+// @author               VVind0wM4ker
 // @namespace           https://github.com/VVind0wM4ker/Userscripts
 // @homepageURL         https://github.com/VVind0wM4ker/Userscripts/tree/master/YouTube_Mute_Ads
-// @license             MIT License
 // @grant               none
 // @noframes
 // @include             http*://*.youtube.com/watch*
@@ -63,18 +62,18 @@ function setup() {
 
 // ( ͡° ͜ʖ ͡°)
 function analVideo() {
-  if (isAdInterrupting() !== -1 && adHandled === false ) {
+  if (isAdInterrupting() !== -1 && adHandled === false) {
     adHandled = true;
     playerMutedBefore = getPlayer().isMuted();
     getPlayer().mute();
   }
   else if (isAdInterrupting() === -1 && adHandled === true) {
-      adHandled = false;
-      if (playerMutedBefore === false) {
-        getPlayer().unMute();
-      } else {
-        getPlayer().mute();
-      }
+    adHandled = false;
+    if (playerMutedBefore === false) {
+      getPlayer().unMute();
+    } else {
+      getPlayer().mute();
+    }
   }
 }
 

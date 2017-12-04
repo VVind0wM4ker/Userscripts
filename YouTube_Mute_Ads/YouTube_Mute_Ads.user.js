@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name                YouTube - Mute Ads
-// @name:de             YouTube - Mute Ads
-// @version             1.0.4
+// @version             2.0.0-dev
 // @description         Automatically mutes VideoAds
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @autor               VVind0wM4ker
@@ -9,50 +8,73 @@
 // @homepageURL         https://github.com/VVind0wM4ker/Userscripts/tree/master/YouTube_Mute_Ads
 // @license             MIT License
 // @grant               none
+// @noframes
 // @include             http*://*.youtube.com/watch*
+// @updateURL           https://github.com/VVind0wM4ker/Userscripts/raw/master/YouTube_Mute_Ads/YouTube_Mute_Ads.user.js
+// @downloadURL         https://github.com/VVind0wM4ker/Userscripts/raw/master/YouTube_Mute_Ads/YouTube_Mute_Ads.user.js
 // ==/UserScript==
 
+var adHandled = false;
+var playerMutedBefore;
 
-var adPlaying = 0;
-var interval = 500
-var vid = document.getElementsByClassName("video-stream html5-main-video")[0];
+// ----- Setters and Getters -----
+// Getter functions instead of vars to prevent getting old elements
+// in case of navigation for example
+function getVideo() {
+  return document.getElementsByClassName("video-stream html5-main-video")[0];
+}
+function getPlayer() {
+  return document.getElementsByClassName("html5-video-player")[0];
+}
+function getMuteBtn() {
+  if (getPlayer()) {
+    return getPlayer().querySelector("button.ytp-mute-button");
+  }
+  return null;
+}
+function isAdInterrupting() {
+  if (getPlayer()) {
+    return getPlayer().className.indexOf("ad-interrupting");
+  }
+  return null;
+}
+// -------------------------------
 
-var timer;
+function hook() {
+  // add eventlistener if userscript started before the site finished loading
+  if (document.readyState == "loading") {
+    document.addEventListener("DOMContentLoaded", function() {hook();});
+    return;
+  }
+  // site loaded
 
-
-vid.onplay = function() {startTimer();};
-vid.onpause = function() {pauseTimer();};
-    
-	
-	
-var muteAds = function () {
-    
-    //console.log("check for Ads")					//for testing
-    
-    if (document.getElementsByClassName("ad-interrupting").length > 0) {
-        
-        adPlaying = 1;
-        vid.mute();
-    }
-    else {
-        
-        if (adPlaying == 1) {
-            
-            adPlaying = 0;
-            vid.unMute();
-        }
-    }
-};
-
-
-
-function pauseTimer () {
-    
-    clearInterval(timer);
+  // detect navigation on the site
+  document.body.addEventListener("yt-navigate-finish", function() {setup();});
+  setup();
 }
 
-function startTimer () {
-    
-    clearInterval(timer);
-    timer = setInterval(muteAds, interval);
+function setup() {
+  // prevent mess if setup() is called more than once
+  if (getVideo().onplay === null) {
+    getVideo().onplay = function() {analVideo();};
+  }
 }
+
+// ( ͡° ͜ʖ ͡°)
+function analVideo() {
+  if (isAdInterrupting() !== -1 && adHandled === false ) {
+    adHandled = true;
+    playerMutedBefore = getPlayer().isMuted();
+    getPlayer().mute();
+  }
+  else if (isAdInterrupting() === -1 && adHandled === true) {
+      adHandled = false;
+      if (playerMutedBefore === false) {
+        getPlayer().unMute();
+      } else {
+        getPlayer().mute();
+      }
+  }
+}
+
+hook();

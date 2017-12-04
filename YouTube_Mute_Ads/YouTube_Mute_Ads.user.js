@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name                YouTube - Mute Ads
-// @version             2.0.0-dev
+// @version             2.0.0
 // @description         Automatically mutes VideoAds
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @autor               VVind0wM4ker

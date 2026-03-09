@@ -35,9 +35,9 @@ function getMuteBtn() {
 }
 function isAdInterrupting() {
   if (getPlayer()) {
-    return getPlayer().className.indexOf("ad-interrupting");
+    return getPlayer().className.indexOf("ad-interrupting") !== -1;
   }
-  return null;
+  return false;
 }
 // -------------------------------
 
@@ -69,11 +69,11 @@ function setup() {
 
 // ( ͡° ͜ʖ ͡°)
 function analVideo() {
-  if (isAdInterrupting() !== -1 && adHandled === false) {
+  if (isAdInterrupting() && adHandled === false) {
     adHandled = true;
     playerMutedBefore = getPlayer().isMuted();
     getPlayer().mute();
-  } else if (isAdInterrupting() === -1 && adHandled === true) {
+  } else if (!isAdInterrupting() && adHandled === true) {
     adHandled = false;
     if (playerMutedBefore === false) {
       getPlayer().unMute();

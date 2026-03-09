@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                YouTube - Mute Ads
 // @name:de             YouTube - Mute Ads
-// @version             2.0.0
+// @version             2.1.0
 // @description         Automatically mutes VideoAds
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
 // @author              VVind0wM4ker
@@ -19,7 +19,6 @@ var listenerAdded = false;
 var adHandled = false;
 var playerMutedBefore;
 
-// ----- Setters and Getters -----
 // Getter functions instead of vars to prevent getting old elements
 // in case of navigation for example
 function getVideo() {
@@ -30,7 +29,7 @@ function getPlayer() {
 }
 function getMuteBtn() {
   if (getPlayer()) {
-    return getPlayer().querySelector("button.ytp-mute-button");
+    return getPlayer().querySelector(".ytp-mute-button button");
   }
   return null;
 }
@@ -40,7 +39,35 @@ function isAdInterrupting() {
   }
   return false;
 }
-// -------------------------------
+
+// The player already implements mute(), unmute() and isMuted() and using them
+// would be a bit cleaner. But since userscripts run in an isolated context, we
+// could only call those functions via unsafeWindow.
+//
+// Let's avoid this, and reimplement these functions. This way we can keep
+// maximum isolation.
+function isMuted() {
+  let btn = getMuteBtn();
+
+  if (btn) {
+    return btn.ariaLabel.includes("Unmute");
+  }
+
+  return null;
+}
+function mute() {
+  if (!isMuted()) {
+    let btn = getMuteBtn();
+    if (btn) {
+      getMuteBtn().click();
+    }
+  }
+}
+function unmute() {
+  if (isMuted()) {
+    getMuteBtn().click();
+  }
+}
 
 function hook() {
   // add eventlistener if userscript started before the site finished loading
@@ -73,14 +100,14 @@ function setup() {
 function analVideo() {
   if (isAdInterrupting() && adHandled === false) {
     adHandled = true;
-    playerMutedBefore = getPlayer().isMuted();
-    getPlayer().mute();
+    playerMutedBefore = isMuted();
+    mute();
   } else if (!isAdInterrupting() && adHandled === true) {
     adHandled = false;
     if (playerMutedBefore === false) {
-      getPlayer().unMute();
+      unmute();
     } else {
-      getPlayer().mute();
+      mute();
     }
   }
 }

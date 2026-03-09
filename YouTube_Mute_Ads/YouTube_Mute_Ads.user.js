@@ -15,6 +15,7 @@
 // @downloadURL         https://github.com/VVind0wM4ker/Userscripts/raw/master/YouTube_Mute_Ads/YouTube_Mute_Ads.user.js
 // ==/UserScript==
 
+var listenerAdded = false;
 var adHandled = false;
 var playerMutedBefore;
 
@@ -60,7 +61,8 @@ function hook() {
 
 function setup() {
   // prevent mess if setup() is called more than once
-  if (getVideo().onplay === null) {
+  if (!listenerAdded) {
+    listenerAdded = true;
     getVideo().onplay = function () {
       analVideo();
     };

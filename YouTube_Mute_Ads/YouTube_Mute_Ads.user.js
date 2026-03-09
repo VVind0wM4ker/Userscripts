@@ -44,37 +44,42 @@ function isAdInterrupting() {
 function hook() {
   // add eventlistener if userscript started before the site finished loading
   if (document.readyState == "loading") {
-    document.addEventListener("DOMContentLoaded", function() {hook();});
+    document.addEventListener("DOMContentLoaded", function () {
+      hook();
+    });
     return;
   }
   // site loaded
 
   // detect navigation on the site
-  document.body.addEventListener("yt-navigate-finish", function() {setup();});
+  document.body.addEventListener("yt-navigate-finish", function () {
+    setup();
+  });
   setup();
 }
 
 function setup() {
   // prevent mess if setup() is called more than once
   if (getVideo().onplay === null) {
-    getVideo().onplay = function() {analVideo();};
+    getVideo().onplay = function () {
+      analVideo();
+    };
   }
 }
 
 // ( ͡° ͜ʖ ͡°)
 function analVideo() {
-  if (isAdInterrupting() !== -1 && adHandled === false ) {
+  if (isAdInterrupting() !== -1 && adHandled === false) {
     adHandled = true;
     playerMutedBefore = getPlayer().isMuted();
     getPlayer().mute();
-  }
-  else if (isAdInterrupting() === -1 && adHandled === true) {
-      adHandled = false;
-      if (playerMutedBefore === false) {
-        getPlayer().unMute();
-      } else {
-        getPlayer().mute();
-      }
+  } else if (isAdInterrupting() === -1 && adHandled === true) {
+    adHandled = false;
+    if (playerMutedBefore === false) {
+      getPlayer().unMute();
+    } else {
+      getPlayer().mute();
+    }
   }
 }
 

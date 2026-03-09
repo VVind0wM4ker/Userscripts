@@ -4,7 +4,7 @@
 // @version             2.0.0
 // @description         Automatically mutes VideoAds
 // @description:de      Schaltet Werbung auf YouTube automatisch stumm
-// @autor               VVind0wM4ker
+// @author              VVind0wM4ker
 // @namespace           https://github.com/VVind0wM4ker/Userscripts
 // @homepageURL         https://github.com/VVind0wM4ker/Userscripts/tree/master/YouTube_Mute_Ads
 // @license             MIT License
